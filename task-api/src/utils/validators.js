@@ -33,4 +33,14 @@ const validateUpdateTask = (body) => {
   return null;
 };
 
-module.exports = { validateCreateTask, validateUpdateTask };
+const validateAssignTask = (body, currentTask) => {
+  if (!body || body.assignee === undefined || typeof body.assignee !== 'string' || body.assignee.trim() === '') {
+    return 'assignee is required and must be a non-empty string';
+  }
+  if (currentTask && currentTask.assignee === body.assignee.trim()) {
+    return 'Task is already assigned to this assignee';
+  }
+  return null;
+};
+
+module.exports = { validateCreateTask, validateUpdateTask, validateAssignTask };
